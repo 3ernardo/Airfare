@@ -126,14 +126,13 @@ public class Application {
     public void findCustomerMenuChoice(int opt){
         switch (opt){
             case 1:
-                System.out.println("Inform the name");
                 findCustName();
                 break;
             case 2:
-                System.out.println("Inform the ID");
+                findCustId();
                 break;
             case 3:
-                System.out.println("Inform the telephone");
+                findCustPhone();
                 break;
             case 4:
                 break;
@@ -162,5 +161,13 @@ public class Application {
 
     public void findCustName(){
         rep.searchCustName(Console.scanString("Customer's name:"));
+    }
+
+    public void findCustId(){
+        rep.searchCustId(Console.scanString("Customer's ID:"));
+    }
+
+    public void findCustPhone(){
+        rep.searchCustPhone(Console.scanString("Customer's Telephone:"));
     }
 }

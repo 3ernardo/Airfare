@@ -49,4 +49,40 @@ public class Repository {
             System.out.println("Customer not found");
         }
     }
+
+    public void searchCustId(String id) {
+        int success = 0;
+        for (Customer c : customers) {
+            if (id.equals(c.getId())) {
+                System.out.println(String.format("%-20s", "Name") + "\t" +
+                        String.format("%-15s", "ID") + "\t" +
+                        String.format("%-18s", "Telephone"));
+                System.out.println(String.format("%-20s", c.getName()) + "\t" +
+                        String.format("%-15s", c.getId()) + "\t" +
+                        String.format("%-18s", c.getPhone()));
+                success = 1;
+            }
+        }
+        if (success == 0) {
+            System.out.println("Customer not found");
+        }
+    }
+
+    public void searchCustPhone(String phone){
+        int success = 0;
+        for (Customer c : customers) {
+            if (phone.equals(c.getPhone())){
+                System.out.println(String.format("%-20s", "Name") + "\t" +
+                        String.format("%-15s", "ID") + "\t" +
+                        String.format("%-18s", "Telephone"));
+                System.out.println(String.format("%-20s", c.getName()) + "\t" +
+                        String.format("%-15s", c.getId()) + "\t" +
+                        String.format("%-18s", c.getPhone()));
+                success = 1;
+            }
+        }
+        if (success == 0) {
+            System.out.println("Customer not found");
+        }
+    }
 }
