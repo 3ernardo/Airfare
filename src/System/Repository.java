@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Repository {
 	
 	ArrayList<Customer> customers = new ArrayList<Customer>();
+	ArrayList<Airplane> airplanes = new ArrayList<Airplane>();
 
     public void addCustomers() {
         appendCustomer("Moses Broadhead", "6946884", "98742-2726");
@@ -14,11 +15,19 @@ public class Repository {
         appendCustomer("Chase Roberge", "7967397", "98368-3727");
     }
 
+    public void addPlanes() {
+        appendAirplane("FQQ-4843", "Embraer", 20);
+        appendAirplane("HWH-5429", "Boeing", 64);
+        appendAirplane("GZH-8386", "Airbus", 76);
+        appendAirplane("BKP-3294", "Cessna", 12);
+    }
+
+    /* CUSTOMER */
 	public void appendCustomer(String name, String id, String phone){
 	    Customer c = new Customer(name, id, phone);
 	    customers.add(c);
     }
-    
+
     public void listCustomers(){
         System.out.println(String.format("%-20s", "Name") + "\t" +
                 String.format("%-15s", "ID") + "\t" +
@@ -85,4 +94,25 @@ public class Repository {
             System.out.println("Customer not found");
         }
     }
+
+    /* AIRPLANE */
+    public void appendAirplane(String code, String planeName, int qntSeats){
+        Airplane a = new Airplane(code, planeName, qntSeats);
+        airplanes.add(a);
+    }
+
+    public void listAirplanes(){
+        System.out.println(String.format("%-12s", "Code") + "\t" +
+                String.format("%-12s", "Designation") + "\t" +
+                String.format("%-10s", "Quantity"));
+
+        for (Airplane a : airplanes) {
+            System.out.println(String.format("%-12s", a.getCode()) + "\t" +
+                    String.format("%-12s", a.getPlaneName()) + "\t" +
+                    String.format("%-10s", a.getQntSeats())
+            );
+        }
+    }
+
+
 }
