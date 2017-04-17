@@ -1,9 +1,9 @@
 package System;
 
 public class Customer {
-    String name;
-    String id;
-    String phone;
+    private String name;
+    private String id;
+    private String phone;
 
     public Customer(String n, String i, String p) {
         name = n;

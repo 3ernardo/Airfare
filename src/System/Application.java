@@ -27,7 +27,7 @@ public class Application {
                     "           MAIN MENU            ");
             Menu mainMenu = new Menu();
             mainMenu.addOption("Customers");
-            mainMenu.addOption("Fights");
+            mainMenu.addOption("Flights");
             mainMenu.addOption("Planes");
             mainMenu.addOption("Quit the application");
             mainMenu.showMenu();

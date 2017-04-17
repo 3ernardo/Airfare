@@ -1,11 +1,10 @@
 package Menu;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Menu {
 
-	List<Option> menuOptions = new ArrayList<Option>();
+	ArrayList<Option> menuOptions = new ArrayList<Option>();
 	
 	public void addOption(String name){
 		Option o = new Option(name);
@@ -19,5 +18,4 @@ public class Menu {
 			System.out.println("["+i+"] "+opt.getOption());
 		}
 	}
-	
 }
