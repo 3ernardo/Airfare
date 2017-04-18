@@ -17,34 +17,34 @@ public class RepositoryAirplane {
     private int spacerB = 12;
     private int spacerC = 10;
 
-    public void appendAirplane(String code, String planeName, int qntSeats){
+    public void appendAirplane(String code, String planeName, int qntSeats) {
         Airplane a = new Airplane(code, planeName, qntSeats);
         airplanes.add(a);
     }
 
-    private void printPlaneHeader(){
-        System.out.println(String.format("%-"+spacerA+"s", "Code") + "\t" +
-                String.format("%-"+spacerB+"s", "Designation") + "\t" +
-                String.format("%-"+spacerC+"s", "Quantity"));
+    private void printPlaneHeader() {
+        System.out.println(String.format("%-" + spacerA + "s", "Code") + "\t" +
+                String.format("%-" + spacerB + "s", "Designation") + "\t" +
+                String.format("%-" + spacerC + "s", "Quantity"));
     }
 
-    private void printAirplane(Airplane a){
-        System.out.println(String.format("%-"+spacerA+"s", a.getCode()) + "\t" +
-                String.format("%-"+spacerB+"s", a.getPlaneName()) + "\t" +
-                String.format("%-"+spacerC+"s", a.getQntSeats())
+    private void printAirplane(Airplane a) {
+        System.out.println(String.format("%-" + spacerA + "s", a.getCode()) + "\t" +
+                String.format("%-" + spacerB + "s", a.getPlaneName()) + "\t" +
+                String.format("%-" + spacerC + "s", a.getQntSeats())
         );
     }
 
     public void listAirplanes() {
         printPlaneHeader();
         for (Airplane a : airplanes) {
-                printAirplane(a);
+            printAirplane(a);
         }
     }
 
-    public void searchAirplane(int opt, String toSearch){
+    public void searchAirplane(int opt, String toSearch) {
         boolean success = false;
-        for (Airplane a : airplanes){
+        for (Airplane a : airplanes) {
             switch (opt) {
                 case 1: // Search by code
                     if (toSearch.equals(a.getCode())) success = true;
