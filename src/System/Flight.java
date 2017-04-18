@@ -2,14 +2,14 @@ package System;
 
 import java.time.LocalDate;
 
-public class Flights {
+public class Flight {
 
     private String origin;
     private String destination;
     private LocalDate departureTime;
-    private String designatedPlane;
+    private Airplane designatedPlane;
 
-    public Flights(String origin, String destination, LocalDate departureTime, String designatedPlane) {
+    public Flight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane) {
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
@@ -40,11 +40,11 @@ public class Flights {
         this.departureTime = departureTime;
     }
 
-    public String getDesignatedPlane() {
+    public Airplane getDesignatedPlane() {
         return designatedPlane;
     }
 
-    public void setDesignatedPlane(String designatedPlane) {
+    public void setDesignatedPlane(Airplane designatedPlane) {
         this.designatedPlane = designatedPlane;
     }
 

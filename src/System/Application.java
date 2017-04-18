@@ -27,7 +27,7 @@ public class Application {
                     "           MAIN MENU            ");
             Menu mainMenu = new Menu();
             mainMenu.addOption("Customers");
-            mainMenu.addOption("Flights");
+            mainMenu.addOption("Flight");
             mainMenu.addOption("Planes");
             mainMenu.addOption("Quit the application");
             mainMenu.showMenu();
@@ -46,7 +46,7 @@ public class Application {
                 customerMenu();
                 break;
             case 2:
-                System.out.println("Flights menu");
+                System.out.println("Flight menu");
                 System.out.println("Under construction");
                 break;
             case 3:

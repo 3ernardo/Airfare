@@ -22,7 +22,7 @@ public class RepositoryCustomer {
 
     public void appendCustomer(String name, String id, String phone) {
         Customer c = new Customer(name, id, phone);
-        customers.add(c)
+        customers.add(c);
     }
 
     private void printCustomerHeader() {
