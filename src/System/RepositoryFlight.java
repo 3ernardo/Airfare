@@ -11,6 +11,7 @@ public class RepositoryFlight {
     private int spacerB = 20;
     private int spacerC = 12;
     private int spacerD = 12;
+    private int spacerE = 10;
 
     public void appendFlight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane){
         Flight f = new Flight(origin, destination, departureTime, designatedPlane);
@@ -21,14 +22,16 @@ public class RepositoryFlight {
         System.out.println(String.format("%-" + spacerA + "s", "From") + "\t" +
                 String.format("%-" + spacerB + "s", "To") + "\t" +
                 String.format("%-" + spacerC + "s", "Departure") + "\t" +
-                String.format("%-" + spacerD + "s", "Plane"));
+                String.format("%-" + spacerD + "s", "Plane") + "\t" +
+                String.format("%-" + spacerE + "s", "Seats left"));
     }
 
     private void printFlights(Flight f) {
         System.out.println(String.format("%-" + spacerA + "s", f.getOrigin()) + "\t" +
                 String.format("%-" + spacerB + "s", f.getDestination()) + "\t" +
                 String.format("%-" + spacerC + "s", f.getDepartureTime()) + "\t" +
-                String.format("%-" + spacerD + "s", f.getDesignatedPlane()));
+                String.format("%-" + spacerD + "s", f.getDesignatedPlane()) + "\t" +
+                String.format("%-" + spacerE + "s", f.getAvailableSeats()));
     }
 
     public void listFlights() {
@@ -53,6 +56,9 @@ public class RepositoryFlight {
                     break;
                 case 4: // Search by plane
                     if (toSearch.equals(f.getDesignatedPlane())) success = true;
+                    break;
+                case 5: // Search by seats available (at least)
+                    if (Integer.parseInt(toSearch) <= f.getAvailableSeats()) success = true;
                     break;
                 default:
                     break;

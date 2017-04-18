@@ -8,8 +8,10 @@ public class Flight {
     private String destination;
     private LocalDate departureTime;
     private Airplane designatedPlane;
+    private int availableSeats;
 
     public Flight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane) {
+        this.availableSeats = designatedPlane.getQntSeats()
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
@@ -48,4 +50,11 @@ public class Flight {
         this.designatedPlane = designatedPlane;
     }
 
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
 }
