@@ -6,7 +6,7 @@ public class RepositoryCustomer {
 
     ArrayList<Customer> customers = new ArrayList<Customer>();
 
-    public void addCustomers() {
+    public void startAddCustomers() {
         appendCustomer("Bernardo Araujo", "4489325", "98764-8688");
         appendCustomer("Giuseppe Battaglino", "9635459", "98576-8669");
         appendCustomer("Moses Broadhead", "6946884", "98742-2726");

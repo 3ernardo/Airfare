@@ -3,10 +3,10 @@ import Menu.Menu;
 
 public class Application {
 
-    Repository rep = new Repository();
+    RepositoryCustomer repC = new RepositoryCustomer();
 
     public void exe(){
-        rep.addCustomers();
+        repC.startAddCustomers();
         mainMenu();
     }
 
@@ -25,12 +25,12 @@ public class Application {
             System.out.println("\n" +
                     "________________________________\n" +
                     "           MAIN MENU            ");
-            Menu mainMenu = new Menu();
-            mainMenu.addOption("Customers");
-            mainMenu.addOption("Flight");
-            mainMenu.addOption("Planes");
-            mainMenu.addOption("Quit the application");
-            mainMenu.showMenu();
+            Menu mMenu = new Menu();
+            mMenu.addOption("Customers");
+            mMenu.addOption("Flight");
+            mMenu.addOption("Planes");
+            mMenu.addOption("Quit the application");
+            mMenu.showMenu();
             option = intValidator(Console.scanString(""));
             if (option != 0) {
                 mainMenuChoice(option);
@@ -43,7 +43,7 @@ public class Application {
     public void mainMenuChoice(int opt){
         switch (opt){
             case 1:
-                customerMenu();
+                printCustomerMenu();
                 break;
             case 2:
                 System.out.println("Flight menu");
@@ -62,28 +62,28 @@ public class Application {
         }
     }
 
-    public void customerMenu(){
+    public void printCustomerMenu(){
         int option = 0;
         do {
             System.out.println("\n" +
                     "________________________________\n" +
                     "         CUSTOMER MENU          ");
-            Menu customerMenu = new Menu();
-            customerMenu.addOption("Add a customer");
-            customerMenu.addOption("Find a customer");
-            customerMenu.addOption("List all customers");
-            customerMenu.addOption("Back to main menu");
-            customerMenu.showMenu();
+            Menu cMenu = new Menu();
+            cMenu.addOption("Add a customer");
+            cMenu.addOption("Find a customer");
+            cMenu.addOption("List all customers");
+            cMenu.addOption("Back to main menu");
+            cMenu.showMenu();
             option = intValidator(Console.scanString(""));
             if (option != 0) {
-                customerMenuChoice(option);
+                choiceCustomerMenu(option);
             } else {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
     }
 
-    public void customerMenuChoice(int opt){
+    public void choiceCustomerMenu(int opt){
         switch (opt){
             case 1:
                 addCustomer();
@@ -149,25 +149,25 @@ public class Application {
         String name = Console.scanString("Customer's name:");
         String id = Console.scanString("Customer's ID:");
         String phone = Console.scanString("Customer's phone number:");
-        rep.appendCustomer(name, id, phone);
+        repC.appendCustomer(name, id, phone);
     }
 
     public void listCustomers() {
         System.out.println("\n" +
                 "________________________________\n" +
                 "         LIST CUSTOMERS         ");
-        rep.listCustomers();
+        repC.listCustomers();
     }
 
     public void findCustName(){
-        rep.searchCustName(Console.scanString("Customer's name:"));
+        repC.searchCustomer(Console.scanString("Customer's name:"));
     }
 
     public void findCustId(){
-        rep.searchCustId(Console.scanString("Customer's ID:"));
+        repC.searchCustomer(Console.scanString("Customer's ID:"));
     }
 
     public void findCustPhone(){
-        rep.searchCustPhone(Console.scanString("Customer's Telephone:"));
+        repC.searchCustomer(Console.scanString("Customer's Telephone:"));
     }
 }

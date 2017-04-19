@@ -3,10 +3,10 @@ package System;
 import java.util.ArrayList;
 
 public class Repository {
-	
+
 	ArrayList<Customer> customers = new ArrayList<Customer>();
 
-    public void addCustomers() {
+    public void startAddCustomers() {
         appendCustomer("Moses Broadhead", "6946884", "98742-2726");
         appendCustomer("Klara Bynoe", "9948648", "98664-8833");
         appendCustomer("Neal Hanselman", "8927744", "98333-6426");
@@ -87,5 +87,5 @@ public class Repository {
         }
     }
 
-
 }
+

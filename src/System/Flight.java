@@ -11,7 +11,7 @@ public class Flight {
     private int availableSeats;
 
     public Flight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane) {
-        this.availableSeats = designatedPlane.getQntSeats()
+        this.availableSeats = designatedPlane.getQntSeats();
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
