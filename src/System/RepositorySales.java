@@ -21,17 +21,17 @@ public class RepositorySales {
                 String.format("%-" + spacerC + "s", "Time"));
     }
 
-    private void printCustomer(Sale s) {
+    private void printSales(Sale s) {
         System.out.println(String.format("%-" + spacerA + "s", s.getCustomer()) + "\t" +
                 String.format("%-" + spacerB + "s", s.getFlight()) + "\t" +
                 String.format("%-" + spacerC + "s", s.getTimeOfPurchase())
         );
     }
 
-    public void listCustomers() {
+    public void listSales() {
         printSalesHeader();
         for (Sale s : salesHistory) {
-            printCustomer(s);
+            printSales(s);
         }
     }
 

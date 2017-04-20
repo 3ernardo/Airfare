@@ -77,4 +77,23 @@ public class RepositoryFlight {
         }
     }
 
+    public boolean flightValid(String flightOrigin){
+        boolean success = false;
+        for (Flight f : flights) {
+            if (flightOrigin.equals(f.getOrigin())){
+                success = true;
+            }
+        }
+        return success;
+    }
+
+    public Flight getAFlight(String flightOrigin){
+        Flight flight = null;
+        for (Flight f : flights) {
+            if (flightOrigin.equals(f.getOrigin())){
+                flight = f;
+            }
+        }
+        return flight;
+    }
 }

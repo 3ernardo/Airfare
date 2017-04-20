@@ -71,4 +71,24 @@ public class RepositoryCustomer {
         }
     }
 
+    public boolean customerValid(String customerName){
+        boolean success = false;
+        for (Customer c : customers) {
+            if (customerName.equals(c.getName())){
+                success = true;
+            }
+        }
+        return success;
+    }
+
+    public Customer getACustomer(String customerName){
+        Customer customer = null;
+        for (Customer c : customers) {
+            if (customerName.equals(c.getName())){
+                customer = c;
+            }
+        }
+        return customer;
+    }
+
 }

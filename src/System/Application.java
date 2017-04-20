@@ -10,6 +10,7 @@ public class Application {
     RepositoryCustomer repC = new RepositoryCustomer();
     RepositoryFlight repF = new RepositoryFlight();
     RepositoryAirplane repA = new RepositoryAirplane();
+    RepositorySales repS = new RepositorySales();
 
     DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -74,6 +75,12 @@ public class Application {
                 break;
             case 4:
                 System.out.println("Closing the application.");
+                break;
+            case 5: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+                makeASale();
+                break;
+            case 6: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+                repS.listSales();
                 break;
             default:
                 System.out.println("Invalid option.");
@@ -274,6 +281,33 @@ public class Application {
         repC.listCustomers();
     }//--------------------------------------------------------- listCustomers
 
+    public void makeASale(){
+        System.out.println("\n" +
+                "________________________________\n" +
+                "           MAKE A SALE          ");
+        boolean valid = false;
+        Customer cust = null;
+        Flight flig = null;
+        String tempCust = Console.scanString("Registered customer name:");
+        if (repC.customerValid(tempCust) == true){
+            cust = repC.getACustomer(tempCust);
+            valid = true;
+        } else {
+            System.out.println("Invalid customer.");
+            valid = false;
+        }
+        String tempFlig = Console.scanString("Registered flight origin:");
+        if (repF.flightValid(tempFlig) == true){
+            flig = repF.getAFlight(tempFlig);
+            valid = true;
+        } else {
+            System.out.println("Invalid flight.");
+            valid = false;
+        }
+        if (valid == true){
+            repS.appendSale(cust, flig);
+        }
+    }
 
     public void addFlight() {
         System.out.println("\n" +
