@@ -1,10 +1,13 @@
 package System;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RepositorySales {
 
     ArrayList<Sale> salesHistory = new ArrayList<Sale>();
+
+    DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private int spacerA = 20;
     private int spacerB = 20;
@@ -24,7 +27,7 @@ public class RepositorySales {
     private void printSales(Sale s) {
         System.out.println(String.format("%-" + spacerA + "s", s.getCustomer()) + "\t" +
                 String.format("%-" + spacerB + "s", s.getFlight()) + "\t" +
-                String.format("%-" + spacerC + "s", s.getTimeOfPurchase())
+                String.format("%-" + spacerC + "s", s.getTimeOfPurchase().format(dateForm))
         );
     }
 

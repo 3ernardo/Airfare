@@ -51,6 +51,8 @@ public class Application {
             mMenu.addOption("Customers");
             mMenu.addOption("Flight");
             mMenu.addOption("Airplane");
+            mMenu.addOption("Make a sale");
+            mMenu.addOption("Sales report");
             mMenu.addOption("Quit the application");
             mMenu.showMenu();
             option = intValidator(Console.scanString(""));
@@ -59,7 +61,7 @@ public class Application {
             } else {
                 System.out.println("Invalid option.");
             }
-        } while (option != 4);
+        } while (option != 6);
     }//--------------------------------------------------------- printMainMenu
 
     public void choiceMainMenu(int opt){
@@ -73,14 +75,14 @@ public class Application {
             case 3:
                 printAirplaneMenu();
                 break;
-            case 4:
-                System.out.println("Closing the application.");
-                break;
-            case 5: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+            case 4: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
                 makeASale();
                 break;
-            case 6: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+            case 5: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
                 repS.listSales();
+                break;
+            case 6:
+                System.out.println("Closing the application.");
                 break;
             default:
                 System.out.println("Invalid option.");
