@@ -68,4 +68,22 @@ public class RepositoryAirplane {
         }
     }
 
+    public boolean planeValid(String pleneName){
+        boolean success = false;
+        for (Airplane a : airplanes) {
+            if (pleneName.equals(a.getPlaneName())){
+                success = true;
+            }
+        }
+        return success;
+    }
+
+    /*public Airplane getAnAirplane(String pleneName){
+        for (Airplane a : airplanes) {
+            if (pleneName.equals(a.getPlaneName())){
+                return a;
+            }
+        }
+    }*/
+
 }

@@ -1,11 +1,16 @@
 package System;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RepositoryFlight {
 
     ArrayList<Flight> flights = new ArrayList<Flight>();
+
+    /*public void startAddFlights() {
+
+        appendFlight("Porto Alegre", "Curitiba", 2017, 05, 01, 08, 00);
+    }*/
 
     private int spacerA = 20;
     private int spacerB = 20;
@@ -13,9 +18,14 @@ public class RepositoryFlight {
     private int spacerD = 12;
     private int spacerE = 10;
 
-    public void appendFlight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane){
-        Flight f = new Flight(origin, destination, departureTime, designatedPlane);
-        flights.add(f);
+    public void appendFlight(String origin, String destination, int y, int m, int d, int hr, int mi) {
+        try {
+            LocalDateTime flightTime = LocalDateTime.of( y, m, d, hr, mi);
+            Flight f = new Flight(origin, destination, flightTime);
+            flights.add(f);
+        } catch (java.time.DateTimeException e) {
+            System.out.println("Invalid parameters.");
+        }
     }
 
     private void printFlightHeader() {

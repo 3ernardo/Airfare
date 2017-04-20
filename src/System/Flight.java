@@ -1,21 +1,21 @@
 package System;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Flight {
 
     private String origin;
     private String destination;
-    private LocalDate departureTime;
+    private LocalDateTime departureTime;
     private Airplane designatedPlane;
     private int availableSeats;
 
-    public Flight(String origin, String destination, LocalDate departureTime, Airplane designatedPlane) {
+    public Flight(String origin, String destination, LocalDateTime departureTime) {
         this.availableSeats = designatedPlane.getQntSeats();
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
-        this.designatedPlane = designatedPlane;
+        //this.designatedPlane = designatedPlane;
     }
 
     public String getOrigin() {
@@ -34,11 +34,11 @@ public class Flight {
         this.destination = destination;
     }
 
-    public LocalDate getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDate departureTime) {
+    public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
     }
 
