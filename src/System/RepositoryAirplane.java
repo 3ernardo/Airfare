@@ -78,12 +78,14 @@ public class RepositoryAirplane {
         return success;
     }
 
-    /*public Airplane getAnAirplane(String pleneName){
+    public Airplane getAnAirplane(String pleneName){
+        Airplane plane = null;
         for (Airplane a : airplanes) {
             if (pleneName.equals(a.getPlaneName())){
-                return a;
+                plane = a;
             }
         }
-    }*/
+        return plane;
+    }
 
 }

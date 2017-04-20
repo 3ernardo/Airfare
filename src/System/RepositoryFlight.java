@@ -1,31 +1,22 @@
 package System;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RepositoryFlight {
 
     ArrayList<Flight> flights = new ArrayList<Flight>();
 
-    /*public void startAddFlights() {
-
-        appendFlight("Porto Alegre", "Curitiba", 2017, 05, 01, 08, 00);
-    }*/
-
-    private int spacerA = 20;
-    private int spacerB = 20;
-    private int spacerC = 12;
-    private int spacerD = 12;
+    private int spacerA = 17;
+    private int spacerB = 17;
+    private int spacerC = 19;
+    private int spacerD = 10;
     private int spacerE = 10;
 
-    public void appendFlight(String origin, String destination, int y, int m, int d, int hr, int mi) {
-        try {
-            LocalDateTime flightTime = LocalDateTime.of( y, m, d, hr, mi);
-            Flight f = new Flight(origin, destination, flightTime);
-            flights.add(f);
-        } catch (java.time.DateTimeException e) {
-            System.out.println("Invalid parameters.");
-        }
+    public void appendFlight(String origin, String destination, LocalDateTime departureTime, Airplane plane) {
+        Flight f = new Flight(origin, destination, departureTime, plane);
+        flights.add(f);
     }
 
     private void printFlightHeader() {
@@ -36,11 +27,14 @@ public class RepositoryFlight {
                 String.format("%-" + spacerE + "s", "Seats left"));
     }
 
+    DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     private void printFlights(Flight f) {
+        String formattedTime = f.getDepartureTime().format(dateForm);
         System.out.println(String.format("%-" + spacerA + "s", f.getOrigin()) + "\t" +
                 String.format("%-" + spacerB + "s", f.getDestination()) + "\t" +
-                String.format("%-" + spacerC + "s", f.getDepartureTime()) + "\t" +
-                String.format("%-" + spacerD + "s", f.getDesignatedPlane()) + "\t" +
+                String.format("%-" + spacerC + "s", formattedTime) + "\t" +
+                String.format("%-" + spacerD + "s", f.getPlaneName()) + "\t" +
                 String.format("%-" + spacerE + "s", f.getAvailableSeats()));
     }
 

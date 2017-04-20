@@ -2,6 +2,8 @@ package System;
 import Menu.Menu;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Application {
 
@@ -9,8 +11,21 @@ public class Application {
     RepositoryFlight repF = new RepositoryFlight();
     RepositoryAirplane repA = new RepositoryAirplane();
 
+    DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     public void exe(){
         repC.startAddCustomers();
+        repA.addPlanes();
+        repF.appendFlight("Porto Alegre", "Curitiba", LocalDateTime.parse("2017-05-05 12:00", dateForm), repA.getAnAirplane("Embraer"));
+        repF.appendFlight("Foggia", "Roma", LocalDateTime.parse("2017-05-06 11:30", dateForm), repA.getAnAirplane("Boeing"));
+        repF.appendFlight("Veneza", "Londres", LocalDateTime.parse("2017-05-07 14:12", dateForm), repA.getAnAirplane("Airbus"));
+        repF.appendFlight("Rio de Janeiro", "Salvador", LocalDateTime.parse("2017-05-08 16:45", dateForm), repA.getAnAirplane("Embraer"));
+        repF.appendFlight("Manaus", "Porto Velho", LocalDateTime.parse("2017-05-11 20:30", dateForm), repA.getAnAirplane("Airbus"));
+        repF.appendFlight("Caxias do Sul", "Bari", LocalDateTime.parse("2017-06-12 17:00", dateForm), repA.getAnAirplane("Embraer"));
+        repF.appendFlight("Miami", "Los Angeles", LocalDateTime.parse("2017-06-16 02:45", dateForm), repA.getAnAirplane("Cessna"));
+        repF.appendFlight("Lecce", "Recife", LocalDateTime.parse("2017-06-18 09:30", dateForm), repA.getAnAirplane("Boeing"));
+        repF.appendFlight("Berlim", "Bayern", LocalDateTime.parse("2017-07-03 19:00", dateForm), repA.getAnAirplane("Cessna"));
+        repF.appendFlight("Carapelle", "Eboli", LocalDateTime.parse("2017-07-10 22:00", dateForm), repA.getAnAirplane("Airbus"));
         printMainMenu();
     }//--------------------------------------------------------- exe
 
@@ -260,17 +275,21 @@ public class Application {
     }//--------------------------------------------------------- listCustomers
 
 
-
     public void addFlight() {
         System.out.println("\n" +
                 "________________________________\n" +
                 "          ADD FLIGHT          ");
         String origin = Console.scanString("Flight's origin:");
         String destination = Console.scanString("Flight's destination:");
-        LocalDate departureTime = Console.scanLocalDate("Flight's departure time:");
-        String designatedPlane = Console.scanString("Flight's airplane:");
-        int availableSeats = Console.scanInt("Flight's seats:");
-        repF.appendFlight(origin, destination, departureTime, designatedPlane, availableSeats);
+        LocalDateTime departureTime = LocalDateTime.parse(Console.scanString("Flight's date format(YYYY-MM-DD hh:mm):"), dateForm);
+        String tempPlane = Console.scanString("Flight's airplane:");
+        Airplane designatedPlane = null;
+        if (repA.planeValid(tempPlane) == true) {
+            designatedPlane = repA.getAnAirplane(tempPlane);
+        } else {
+            System.out.println("Invalid plane.");
+        }
+        repF.appendFlight(origin, destination, departureTime, designatedPlane);
     }//--------------------------------------------------------- addFlight
 
     public void printFindFlightMenu() {
