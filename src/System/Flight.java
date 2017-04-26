@@ -3,19 +3,28 @@ package System;
 import java.time.LocalDateTime;
 
 public class Flight {
-
+    private String code;
     private String origin;
     private String destination;
     private LocalDateTime departureTime;
     private Airplane designatedPlane;
     private int availableSeats;
 
-    public Flight(String origin, String destination, LocalDateTime departureTime, Airplane designatedPlane) {
+    public Flight(String code, String origin, String destination, LocalDateTime departureTime, Airplane designatedPlane) {
         this.availableSeats = designatedPlane.getQntSeats();
+        this.code = code;
         this.origin = origin;
         this.destination = destination;
         this.departureTime = departureTime;
         this.designatedPlane = designatedPlane;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getOrigin() {
@@ -58,7 +67,7 @@ public class Flight {
         return availableSeats;
     }
 
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
+    public void sellOneSeat() {
+        this.availableSeats--;
     }
 }

@@ -11,6 +11,7 @@ public class RepositoryAirplane {
         appendAirplane("HWH-5429", "Boeing", 64);
         appendAirplane("GZH-8386", "Airbus", 76);
         appendAirplane("BKP-3294", "Cessna", 12);
+        appendAirplane("SDJ-6743", "Cirrus", 1);
     }
 
     private int spacerA = 12;

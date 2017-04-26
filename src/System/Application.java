@@ -1,7 +1,6 @@
 package System;
 import Menu.Menu;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -26,7 +25,7 @@ public class Application {
         repF.appendFlight("Miami", "Los Angeles", LocalDateTime.parse("2017-06-16 02:45", dateForm), repA.getAnAirplane("Cessna"));
         repF.appendFlight("Lecce", "Recife", LocalDateTime.parse("2017-06-18 09:30", dateForm), repA.getAnAirplane("Boeing"));
         repF.appendFlight("Berlim", "Bayern", LocalDateTime.parse("2017-07-03 19:00", dateForm), repA.getAnAirplane("Cessna"));
-        repF.appendFlight("Carapelle", "Eboli", LocalDateTime.parse("2017-07-10 22:00", dateForm), repA.getAnAirplane("Airbus"));
+        repF.appendFlight("Carapelle", "Eboli", LocalDateTime.parse("2017-07-10 22:00", dateForm), repA.getAnAirplane("Cirrus"));
         printMainMenu();
     }//--------------------------------------------------------- exe
 
@@ -75,10 +74,10 @@ public class Application {
             case 3:
                 printAirplaneMenu();
                 break;
-            case 4: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+            case 4:
                 makeASale();
                 break;
-            case 5: // TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP - TEMP
+            case 5:
                 repS.listSales();
                 break;
             case 6:
@@ -215,14 +214,59 @@ public class Application {
     //====================================================================================== 3º level
 
     public void addCustomer() {
-        System.out.println("\n" +
-                "________________________________\n" +
-                "          ADD CUSTOMER          ");
-        String name = Console.scanString("Customer's name:");
-        String id = Console.scanString("Customer's ID:");
-        String phone = Console.scanString("Customer's phone number:");
-        repC.appendCustomer(name, id, phone);
+        String name;
+        String id;
+        String phone;
+        String error;
+
+        outerbreak:
+        for (int i = 0; i < 1; i++) {
+            System.out.println("\n" +
+                    "________________________________\n" +
+                    "          ADD CUSTOMER          ");
+            // Customer name
+            do {
+                name = Console.scanString("Customer's name:");
+                if (name.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid name, must contain only letters and spaces.";
+            } while (!validator(name, Validators.customerNameValidator, error));
+            // Customer ID
+            do {
+                id = Console.scanString("Customer's ID:");
+                if (id.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid ID, must contain from six to nine digits, only numbers allowed.";
+            } while (!validator(id, Validators.customerIdValidator, error));
+            // Customer phone
+            do {
+                phone = Console.scanString("Customer's phone number:");
+                if (phone.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid phone, must contain only numbers and dashes.";
+            } while (!validator(phone, Validators.customerPhoneValidator, error));
+
+            repC.appendCustomer(name, id, phone);
+        }
     }//--------------------------------------------------------- addCustomer
+
+    public boolean validator(String toTest, String testAgainst, String errorMessage) {
+        if (toTest.matches(testAgainst)){
+            return true;
+        } else {
+            System.out.println(errorMessage);
+            System.out.println("Type 'exit' to cancel the input.");
+            return false;
+        }
+    }
+
+    public boolean futureDateValidator(LocalDateTime toTest) {
+        if (toTest.isAfter(LocalDateTime.now()) && toTest.isBefore(LocalDateTime.now().plusYears(10))) {
+            return true;
+        } else {
+            System.out.println("Invalid period, the date must be in the future and 10 years at most.");
+            return false;
+        }
+    }
+
+
 
     public void printFindCustomerMenu(){
         int option = 0;
@@ -291,7 +335,7 @@ public class Application {
         Customer cust = null;
         Flight flig = null;
         String tempCust = Console.scanString("Registered customer name:");
-        if (repC.customerValid(tempCust) == true){
+        if (repC.customerExists(tempCust) == true){
             cust = repC.getACustomer(tempCust);
             valid = true;
         } else {
@@ -307,25 +351,60 @@ public class Application {
             valid = false;
         }
         if (valid == true){
-            repS.appendSale(cust, flig);
+            if (repS.appendSale(cust, flig)) {
+                System.out.println("Sale successful.");
+            } else {
+                System.out.println("WARNING:\nThe sale could not be completed.");
+            }
         }
     }
 
     public void addFlight() {
-        System.out.println("\n" +
-                "________________________________\n" +
-                "          ADD FLIGHT          ");
-        String origin = Console.scanString("Flight's origin:");
-        String destination = Console.scanString("Flight's destination:");
-        LocalDateTime departureTime = LocalDateTime.parse(Console.scanString("Flight's date format(YYYY-MM-DD hh:mm):"), dateForm);
-        String tempPlane = Console.scanString("Flight's airplane:");
+        String origin;
+        String destination;
+        String tempTime;
+        LocalDateTime departureTime = null;
+        String tempPlane;
         Airplane designatedPlane = null;
-        if (repA.planeValid(tempPlane) == true) {
-            designatedPlane = repA.getAnAirplane(tempPlane);
-        } else {
-            System.out.println("Invalid plane.");
+        String error;
+        boolean valid;
+
+        outerbreak:
+        for (int i = 0; i < 1; i++) {
+            System.out.println("\n" +
+                    "________________________________\n" +
+                    "          ADD FLIGHT          ");
+            // Flight origin
+            do {
+                origin = Console.scanString("Flight's origin:");
+                if (origin.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid origin, must contain only letters and spaces.";
+            } while (!validator(origin, Validators.flightOrigDestValidator, error));
+            // Flight destination
+            do {
+                destination = Console.scanString("Flight's destination:");
+                if (destination.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid destination, must contain only letters and spaces.";
+            } while (!validator(destination, Validators.flightOrigDestValidator, error));
+            // Flight time
+            do {
+                do {
+                    tempTime = Console.scanString("Flight's date format(YYYY-MM-DD hh:mm):");
+                    if (tempTime.equalsIgnoreCase("exit")) break outerbreak;
+                    error = "Invalid date, please use the following format: 'YYYY-MM-DD hh:mm'.";
+                } while (!validator(tempTime, Validators.flightDateTimeValidator, error));
+                departureTime = LocalDateTime.parse(tempTime, dateForm);
+            } while (!futureDateValidator(departureTime));
+            // Flight plane
+            do {
+                tempPlane = Console.scanString("Flight's airplane:");
+                if (repA.planeValid(tempPlane) == true) { designatedPlane = repA.getAnAirplane(tempPlane); }
+                else { System.out.println("Invalid airplane, please check the available aircrafts."); }
+                if (tempPlane.equalsIgnoreCase("exit")) break outerbreak;
+            } while (!repA.planeValid(tempPlane));
+
+            repF.appendFlight(origin, destination, departureTime, designatedPlane);
         }
-        repF.appendFlight(origin, destination, departureTime, designatedPlane);
     }//--------------------------------------------------------- addFlight
 
     public void printFindFlightMenu() {
@@ -398,13 +477,39 @@ public class Application {
 
 
     public void addAirplane() {
-        System.out.println("\n" +
-                "________________________________\n" +
-                "          ADD AIRPLANE          ");
-        String code = Console.scanString("Airplane's code:");
-        String planeName = Console.scanString("Airplane's name:");
-        int qntSeats = Console.scanInt("Airplane's seats:");
-        repA.appendAirplane(code, planeName, qntSeats);
+        String code;
+        String planeName;
+        int qntSeats = 0;
+        String error;
+
+        outerbreak:
+        for (int i = 0; i < 1; i++) {
+            System.out.println("\n" +
+                    "________________________________\n" +
+                    "          ADD AIRPLANE          ");
+            // Plane code
+            do {
+                code = Console.scanString("Airplane's code (AAA-0000):");
+                if (code.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid code, please use the following format: 'AAA-0000'.";
+            } while (!validator(code, Validators.airplaneCodeValidator, error));
+            // Plane name
+            do {
+                planeName = Console.scanString("Airplane's name:");
+                if (planeName.equalsIgnoreCase("exit")) break outerbreak;
+                error = "Invalid name, use only letters and numbers.";
+            } while (!validator(planeName, Validators.airplaneNameValidator, error));
+            // Plane seats
+            do {
+                try {
+                    qntSeats = Console.scanInt("Airplane's seats:");
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input, insert a round number.");
+                }
+            } while (qntSeats == 0);
+
+            repA.appendAirplane(code, planeName, qntSeats);
+        }
     }//--------------------------------------------------------- addAirplane
 
     public void printFindAirplaneMenu(){

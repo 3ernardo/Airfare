@@ -10,9 +10,10 @@ public class Validators {
     // Flight validators
     static String flightCodeValidator = "^[\\p{IsLatin}\\p{Digit}]{7}$";
     static String flightOrigDestValidator = "^[\\p{IsLatin}]{2,}([ ]{1}[\\p{IsLatin}]++)*$";
+    static String flightDateTimeValidator = "^[0-9]{4}-(1[0-2]|0[1-9])-([1-2][0-9]|3[0-1]|0[1-9]) (1[0-9]|2[0-3]|0[0-9]):([1-5][0-9]|0[0-9])$";
 
     // Plane validators
     static String airplaneNameValidator = "^[\\p{IsLatin}\\p{Digit}]{2,}([ ]{1}[\\p{IsLatin}\\p{Digit}]++)*$";
-    static String airplaneCodeValidator = "^[a-zA-Z]{3}[-]{1}[0-9]{4}$";
+    static String airplaneCodeValidator = "^[a-zA-Z]{3}-[0-9]{4}$";
 
 }

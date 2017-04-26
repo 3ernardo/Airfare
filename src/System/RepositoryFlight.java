@@ -8,34 +8,41 @@ public class RepositoryFlight {
 
     ArrayList<Flight> flights = new ArrayList<Flight>();
 
-    private int spacerA = 17;
+    private int flightCounter = 238;
+
+    private int spacerA = 8;
     private int spacerB = 17;
-    private int spacerC = 19;
-    private int spacerD = 10;
+    private int spacerC = 17;
+    private int spacerD = 19;
     private int spacerE = 10;
+    private int spacerF = 10;
 
     public void appendFlight(String origin, String destination, LocalDateTime departureTime, Airplane plane) {
-        Flight f = new Flight(origin, destination, departureTime, plane);
+        flightCounter++;
+        String code = "FLG7"+Integer.toString(flightCounter);
+        Flight f = new Flight(code, origin, destination, departureTime, plane);
         flights.add(f);
     }
 
     private void printFlightHeader() {
-        System.out.println(String.format("%-" + spacerA + "s", "From") + "\t" +
-                String.format("%-" + spacerB + "s", "To") + "\t" +
-                String.format("%-" + spacerC + "s", "Departure") + "\t" +
-                String.format("%-" + spacerD + "s", "Plane") + "\t" +
-                String.format("%-" + spacerE + "s", "Seats left"));
+        System.out.println(String.format("%-" + spacerA + "s", "Code") + "\t" +
+                String.format("%-" + spacerB + "s", "From") + "\t" +
+                String.format("%-" + spacerC + "s", "To") + "\t" +
+                String.format("%-" + spacerD + "s", "Departure") + "\t" +
+                String.format("%-" + spacerE + "s", "Plane") + "\t" +
+                String.format("%-" + spacerF + "s", "Seats left"));
     }
 
     DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private void printFlights(Flight f) {
         String formattedTime = f.getDepartureTime().format(dateForm);
-        System.out.println(String.format("%-" + spacerA + "s", f.getOrigin()) + "\t" +
-                String.format("%-" + spacerB + "s", f.getDestination()) + "\t" +
-                String.format("%-" + spacerC + "s", formattedTime) + "\t" +
-                String.format("%-" + spacerD + "s", f.getPlaneName()) + "\t" +
-                String.format("%-" + spacerE + "s", f.getAvailableSeats()));
+        System.out.println(String.format("%-" + spacerA + "s", f.getCode()) + "\t" +
+                String.format("%-" + spacerB + "s", f.getOrigin()) + "\t" +
+                String.format("%-" + spacerC + "s", f.getDestination()) + "\t" +
+                String.format("%-" + spacerD + "s", formattedTime) + "\t" +
+                String.format("%-" + spacerE + "s", f.getPlaneName()) + "\t" +
+                String.format("%-" + spacerF + "s", f.getAvailableSeats()));
     }
 
     public void listFlights() {

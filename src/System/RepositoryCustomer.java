@@ -71,7 +71,7 @@ public class RepositoryCustomer {
         }
     }
 
-    public boolean customerValid(String customerName){
+    public boolean customerExists(String customerName){
         boolean success = false;
         for (Customer c : customers) {
             if (customerName.equals(c.getName())){

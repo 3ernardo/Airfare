@@ -13,9 +13,15 @@ public class RepositorySales {
     private int spacerB = 20;
     private int spacerC = 12;
 
-    public void appendSale(Customer customer, Flight flight){
-        Sale s = new Sale(customer, flight);
-        salesHistory.add(s);
+    public boolean appendSale(Customer customer, Flight flight){
+        if (flight.getAvailableSeats() > 0){
+            flight.sellOneSeat();
+            Sale s = new Sale(customer, flight);
+            salesHistory.add(s);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void printSalesHeader() {
