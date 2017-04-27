@@ -78,7 +78,8 @@ public class Application {
                 makeASale();
                 break;
             case 5:
-                repS.listSales();
+                //repS.listSales();
+                printSalesMenu();
                 break;
             case 6:
                 System.out.println("Closing the application.");
@@ -90,6 +91,88 @@ public class Application {
     }//--------------------------------------------------------- choiceMainMenu
 
     //====================================================================================== 2º level
+
+    public void printSalesMenu(){
+        int option = 0;
+        do {
+            System.out.println("\n" +
+                    "________________________________\n" +
+                    "           SALES MENU           ");
+            Menu sMenu = new Menu();
+            sMenu.addOption("Sales report by customer");
+            sMenu.addOption("Sales report by origin");
+            sMenu.addOption("Sales report by destination");
+            sMenu.addOption("Sales report by time period");
+            sMenu.addOption("All sales report");
+            sMenu.addOption("Back to main menu");
+            sMenu.showMenu();
+            option = intValidator(Console.scanString(""));
+            if (option != 0) {
+                choiceSalesMenu(option);
+            } else {
+                System.out.println("Invalid option.");
+            }
+        } while (option != 6);
+    }//--------------------------------------------------------- printSalesMenu
+
+    public void choiceSalesMenu(int opt){
+        switch (opt){
+            case 1:
+                reportByCustomer();
+                break;
+            case 2:
+                reportByOrigin();
+                break;
+            case 3:
+                reportByDestination();
+                break;
+            case 4:
+                reportByTime();
+                break;
+            case 5:
+                repS.listSales();
+            case 6:
+                break;
+            default:
+                System.out.println("Invalid option.");
+                break;
+        }
+    }//--------------------------------------------------------- choiceSalesMenu
+
+    public void reportByCustomer(){
+        String customerName = Console.scanString("Input customer's name:");
+        repS.printSalesHeader();
+        repS.printSalesByCustomer(customerName);
+    }
+
+    public void reportByOrigin(){
+        String flightOrigin = Console.scanString("Input origin:");
+        repS.printSalesHeader();
+        repS.printSalesByOrigin(flightOrigin);
+    }
+
+    public void reportByDestination(){
+        String flightDest = Console.scanString("Input destination:");
+        repS.printSalesHeader();
+        repS.printSalesByDestination(flightDest);
+    }
+
+    public void reportByTime(){
+        String tempStart;
+        String tempFinish;
+        String error;
+
+        do { tempStart = Console.scanString("Earlier date (YYYY-MM-DD hh:mm):");
+            error = "Invalid date, please use the following format: 'YYYY-MM-DD hh:mm'.";
+        } while (!validator(tempStart, Validators.flightDateTimeValidator, error));
+        do { tempFinish = Console.scanString("Later date (YYYY-MM-DD hh:mm):");
+            error = "Invalid date, please use the following format: 'YYYY-MM-DD hh:mm'.";
+        } while (!validator(tempFinish, Validators.flightDateTimeValidator, error));
+
+        repS.printSalesHeader();
+        repS.printSalesByDate(tempStart, tempFinish);
+    }
+
 
     public void printCustomerMenu(){
         int option = 0;
@@ -234,6 +317,10 @@ public class Application {
             do {
                 id = Console.scanString("Customer's ID:");
                 if (id.equalsIgnoreCase("exit")) break outerbreak;
+                if (repC.validID(id)) {
+                    System.out.println("This ID already exists.");
+                    break outerbreak;
+                }
                 error = "Invalid ID, must contain from six to nine digits, only numbers allowed.";
             } while (!validator(id, Validators.customerIdValidator, error));
             // Customer phone
@@ -323,34 +410,44 @@ public class Application {
     public void listCustomers() {
         System.out.println("\n" +
                 "________________________________\n" +
-                "         LIST CUSTOMERS         ");
+                "        CUSTOMERS LIST          ");
         repC.listCustomers();
     }//--------------------------------------------------------- listCustomers
 
     public void makeASale(){
+        listCustomers(); //optional listing
+        listFlights(); //optional listing
         System.out.println("\n" +
                 "________________________________\n" +
                 "           MAKE A SALE          ");
         boolean valid = false;
         Customer cust = null;
         Flight flig = null;
-        String tempCust = Console.scanString("Registered customer name:");
-        if (repC.customerExists(tempCust) == true){
-            cust = repC.getACustomer(tempCust);
-            valid = true;
-        } else {
-            System.out.println("Invalid customer.");
-            valid = false;
-        }
-        String tempFlig = Console.scanString("Registered flight origin:");
-        if (repF.flightValid(tempFlig) == true){
-            flig = repF.getAFlight(tempFlig);
-            valid = true;
-        } else {
-            System.out.println("Invalid flight.");
-            valid = false;
-        }
-        if (valid == true){
+        String id;
+        String code;
+        String error;
+
+        outerbreak:
+        for (int i = 0; i < 1; i++) {
+            do {
+                valid = false;
+                id = Console.scanString("Customer's ID:");
+                if (id.equalsIgnoreCase("exit")) break outerbreak;
+                if (repC.getACustomerByID(id) != null) valid = true;
+                else System.out.println("This ID does not exist.");
+                error = "Invalid customer ID.";
+            } while (!validator(id, Validators.customerIdValidator, error) || !valid);
+            cust = repC.getACustomerByID(id);
+            do {
+                valid = false;
+                code = Console.scanString("Flight code:");
+                if (code.equalsIgnoreCase("exit")) break outerbreak;
+                if (repF.getAFlight(code) != null) valid = true;
+                else System.out.println("This code does not exist.");
+                error = "Invalid flight code.";
+            } while (!validator(code, Validators.flightCodeValidator, error) || !valid);
+            flig = repF.getAFlight(code);
+
             if (repS.appendSale(cust, flig)) {
                 System.out.println("Sale successful.");
             } else {
@@ -491,6 +588,10 @@ public class Application {
             do {
                 code = Console.scanString("Airplane's code (AAA-0000):");
                 if (code.equalsIgnoreCase("exit")) break outerbreak;
+                if (repA.validCode(code)) {
+                    System.out.println("This code already exists.");
+                    break outerbreak;
+                }
                 error = "Invalid code, please use the following format: 'AAA-0000'.";
             } while (!validator(code, Validators.airplaneCodeValidator, error));
             // Plane name

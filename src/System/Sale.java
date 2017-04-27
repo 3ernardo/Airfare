@@ -24,7 +24,15 @@ public class Sale {
     }
 
     public String getFlight() {
+        return flight.getCode();
+    }
+
+    public String getOrigin() {
         return flight.getOrigin();
+    }
+
+    public String getDestination() {
+        return flight.getDestination();
     }
 
     public void setFlight(Flight flight) {

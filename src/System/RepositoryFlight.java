@@ -84,20 +84,20 @@ public class RepositoryFlight {
         }
     }
 
-    public boolean flightValid(String flightOrigin){
+    public boolean flightValid(String flightCode){
         boolean success = false;
         for (Flight f : flights) {
-            if (flightOrigin.equals(f.getOrigin())){
+            if (flightCode.equals(f.getCode())){
                 success = true;
             }
         }
         return success;
     }
 
-    public Flight getAFlight(String flightOrigin){
+    public Flight getAFlight(String flightCode){
         Flight flight = null;
         for (Flight f : flights) {
-            if (flightOrigin.equals(f.getOrigin())){
+            if (flightCode.equals(f.getCode())){
                 flight = f;
             }
         }

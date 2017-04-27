@@ -43,6 +43,14 @@ public class RepositoryAirplane {
         }
     }
 
+    public boolean validCode(String toSearch) {
+        boolean success = false;
+        for (Airplane a : airplanes) {
+            if (toSearch.equals(a.getCode())) success = true;
+        }
+        return success;
+    }
+
     public void searchAirplane(int opt, String toSearch) {
         boolean success = false;
         for (Airplane a : airplanes) {

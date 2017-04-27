@@ -71,6 +71,14 @@ public class RepositoryCustomer {
         }
     }
 
+    public boolean validID(String toSearch) {
+        boolean success = false;
+        for (Customer c : customers) {
+            if (toSearch.equals(c.getId())) success = true;
+        }
+        return success;
+    }
+
     public boolean customerExists(String customerName){
         boolean success = false;
         for (Customer c : customers) {
@@ -85,6 +93,16 @@ public class RepositoryCustomer {
         Customer customer = null;
         for (Customer c : customers) {
             if (customerName.equals(c.getName())){
+                customer = c;
+            }
+        }
+        return customer;
+    }
+
+    public Customer getACustomerByID(String custID){
+        Customer customer = null;
+        for (Customer c : customers) {
+            if (custID.equals(c.getId())){
                 customer = c;
             }
         }
