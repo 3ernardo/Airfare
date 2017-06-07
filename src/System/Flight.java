@@ -19,6 +19,8 @@ public class Flight {
         this.designatedPlane = designatedPlane;
     }
 
+    // ========== getters e setters ==========
+
     public String getCode() {
         return code;
     }
@@ -67,7 +69,7 @@ public class Flight {
         return availableSeats;
     }
 
-    public void sellOneSeat() {
+    public void sellOneSeat() {         //decrementa de 1 os assentos totais
         this.availableSeats--;
     }
 }

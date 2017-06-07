@@ -11,6 +11,8 @@ public class Customer {
         phone = p;
     }
 
+    // ========== getters e setters ==========
+
     public String getName() {
         return name;
     }

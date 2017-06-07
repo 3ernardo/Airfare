@@ -15,6 +15,8 @@ public class Sale {
         this.flight = flight;
     }
 
+    // ========== getters e setters ==========
+
     public String getCustomer() {
         return customer.getName();
     }
