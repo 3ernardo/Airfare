@@ -11,6 +11,8 @@ public class Airplane {
         this.qntSeats = qntSeats;
     }
 
+    // ========== getters e setters ==========
+
     public String getCode() {
         return code;
     }
