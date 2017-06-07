@@ -2,7 +2,7 @@ package System;
 
 public class Customer {
 
-    private int customerID;
+    private int customerKey;
     private String name;
     private String id;
     private String phone;
@@ -13,8 +13,8 @@ public class Customer {
         phone = p;
     }
 
-    public Customer(int cID, String n, String i, String p){
-        customerID = cID;
+    public Customer(int cK, String n, String i, String p){
+        customerKey = cK;
         name = n;
         id = i;
         phone = p;
@@ -23,11 +23,11 @@ public class Customer {
     // ========== getters e setters ==========
 
     public int getCustomerID() {
-        return customerID;
+        return customerKey;
     }
 
     public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+        this.customerKey = customerID;
     }
 
     public String getName() {

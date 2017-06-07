@@ -16,7 +16,7 @@ public class ConnectionTester {
         createCustomer(c1);
         createCustomer(c2);
         readCustomer();
-        Customer c3 = findCustomer("Giuseppe Bat");
+        Customer c3 = findCustomer(2, "Giuseppe Bat");
         c3.setName("Giuseppe Battaglino");
         updateCustomer(c3);
         readCustomer();
@@ -66,9 +66,22 @@ public class ConnectionTester {
         cDAO.delete(c);
     }
 
-    private static Customer findCustomer(String n){
+    private static Customer findCustomer(int tipe, String value){
         CustomerDAO cDAO = new CustomerDAO();
-        return cDAO.findByName(n);
+        Customer c = null;
+        switch (tipe) {
+            case 1: c = cDAO.findByKey(value);
+                break;
+            case 2: c = cDAO.findByName(value);
+                break;
+            case 3: c = cDAO.findById(value);
+                break;
+            case 4: c = cDAO.findByPhone(value);
+                break;
+            default:
+                break;
+        }
+        return c;
     }
 
 }
