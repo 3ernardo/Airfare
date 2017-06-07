@@ -12,17 +12,17 @@ import java.util.logging.Logger;
 
 public class DBConnect {
 
-    private String url = "jdbc:postgresql://localhost:5432/lp2_banco";
-    private String user = "postgres";
-    private String pass = "123456";
+    private static String url = "jdbc:postgresql://localhost:5432/AirfareDB";
+    private static String user = "postgres";
+    private static String pass = "123456";
 
-    public Connection connectToDB() {
+    public static Connection connectToDB() {
         Connection connection = null;
         try {
             Class.forName("org.postgresql.Driver");
-            Connection conexao = DriverManager.getConnection(url, user, pass);
+            connection = DriverManager.getConnection(url, user, pass);
 
-            if(conexao == null) System.out.println("Failed to connect to database.");
+            if(connection == null) System.out.println("Failed to connect to database.");
             else System.out.println("Database connection successful.");
 
         } catch (ClassNotFoundException ex) {
