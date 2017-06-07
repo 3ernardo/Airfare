@@ -1,6 +1,8 @@
 package System;
 
 public class Customer {
+
+    private int customerID;
     private String name;
     private String id;
     private String phone;
@@ -11,7 +13,22 @@ public class Customer {
         phone = p;
     }
 
+    public Customer(int cID, String n, String i, String p){
+        customerID = cID;
+        name = n;
+        id = i;
+        phone = p;
+    }
+
     // ========== getters e setters ==========
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
 
     public String getName() {
         return name;
