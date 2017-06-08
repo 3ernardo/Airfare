@@ -144,7 +144,7 @@ public class AirplaneDAO {
 
             while (rest.next()) {
                 Airplane a = new Airplane(
-                        rest.getInt("customer_key"),
+                        rest.getInt("airplane_key"),
                         rest.getString("code"),
                         rest.getString("planename"),
                         rest.getInt("qntseats")
@@ -168,13 +168,13 @@ public class AirplaneDAO {
         List<Airplane> airplanes = new ArrayList<>();
 
         try {
-            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE planename LIKE ?");
+            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE LOWER(planename) LIKE LOWER(?)");
             ppst.setString(1, "%" + n + "%");
             rest = ppst.executeQuery();
 
             while (rest.next()) {
                 Airplane a = new Airplane(
-                        rest.getInt("customer_key"),
+                        rest.getInt("airplane_key"),
                         rest.getString("code"),
                         rest.getString("planename"),
                         rest.getInt("qntseats")
@@ -204,7 +204,7 @@ public class AirplaneDAO {
 
             while (rest.next()) {
                 Airplane a = new Airplane(
-                        rest.getInt("customer_key"),
+                        rest.getInt("airplane_key"),
                         rest.getString("code"),
                         rest.getString("planename"),
                         rest.getInt("qntseats")
