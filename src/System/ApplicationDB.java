@@ -18,7 +18,7 @@ public class ApplicationDB {
 // ==================== ApplicationDB ====================
 // Esta classe e encarregada de inicializar o sistema, cuida de todas as funcionalidades do menu
 // e permite manter os dados concistentes no BD.
-//  Essa classe e dividida em 3 niveis de menus.
+// Essa classe e dividida em 3 niveis de menus.
 
     RepositoryCustomer repC = new RepositoryCustomer();
     RepositoryFlight repF = new RepositoryFlight();
@@ -391,7 +391,7 @@ public class ApplicationDB {
             } else {
                 System.out.println("Invalid option.");
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 
     public void choiceFindCustomerMenu(int opt) {
@@ -694,7 +694,7 @@ public class ApplicationDB {
             } else {
                 System.out.println("Invalid option.");
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 
     public void choiceFindAirplaneMenu(int opt) {
