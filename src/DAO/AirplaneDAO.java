@@ -1,7 +1,7 @@
 package DAO;
 
 import Connector.ConnectionFactory;
-import System.Customer;
+import System.Airplane;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,64 +15,64 @@ import static java.lang.Integer.parseInt;
 /**
  * Created by Bernardo on 07/06/2017.
  */
-public class CustomerDAO {
+public class AirplaneDAO {
 
     // ||||||||||||||||||||||||||||||||  CRUD  ||||||||||||||||||||||||||||||||
 
     // ================================ CREATE ================================
-    public void create(Customer c){
+    public void create(Airplane a){
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         try {
-            ppst = conn.prepareCall("INSERT INTO customer (name, id, phone) VALUES (?, ?, ?)");
-            ppst.setString(1, c.getName());
-            ppst.setString(2, c.getId());
-            ppst.setString(3, c.getPhone());
+            ppst = conn.prepareCall("INSERT INTO airplane (code, planename, qntseats) VALUES (?, ?, ?)");
+            ppst.setString(1, a.getCode());
+            ppst.setString(2, a.getPlaneName());
+            ppst.setInt(3, a.getQntSeats());
             ppst.executeUpdate();
-            System.out.println("Customer created.");
+            System.out.println("Plane created.");
         } catch (SQLException e) {
             throw new RuntimeException("Creation error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst);
         }
-    } // Closes create customer
+    } // Closes create airplane
 
     // ================================  READ  ================================
-    public List<Customer> read() {
+    public List<Airplane> read() {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        List<Customer> customers = new ArrayList<>();
+        List<Airplane> airplanes = new ArrayList<>();
         try {
-            ppst = conn.prepareStatement("SELECT * FROM customer");
+            ppst = conn.prepareStatement("SELECT * FROM airplane");
             rest = ppst.executeQuery();
             while (rest.next()) {
-                Customer c = new Customer(
-                    rest.getInt("customer_key"),
-                    rest.getString("name"),
-                    rest.getString("id"),
-                    rest.getString("phone")
+                Airplane a = new Airplane(
+                        rest.getInt("airplane_key"),
+                        rest.getString("code"),
+                        rest.getString("planename"),
+                        rest.getInt("qntseats")
                 );
-                customers.add(c);
+                airplanes.add(a);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Query error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return customers;
-    } // Closes read customer
+        return airplanes;
+    } // Closes read airplanes
 
     // ================================ UPDATE ================================
-    public void update(Customer c){
+    public void update(Airplane a){
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         try {
-            ppst = conn.prepareCall("UPDATE customer SET  name = ?, id = ?, phone = ? WHERE customer_key = ?");
-            ppst.setString(1, c.getName());
-            ppst.setString(2, c.getId());
-            ppst.setString(3, c.getPhone());
-            ppst.setInt(4, c.getCustomerKey());
+            ppst = conn.prepareCall("UPDATE airplane SET  code = ?, planename = ?, qntseats = ? WHERE airplane_key = ?");
+            ppst.setString(1, a.getCode());
+            ppst.setString(2, a.getPlaneName());
+            ppst.setInt(3, a.getQntSeats());
+            ppst.setInt(4, a.getAirplaneKey());
             ppst.executeUpdate();
             System.out.println("Updated successfully.");
         } catch (SQLException e) {
@@ -80,15 +80,15 @@ public class CustomerDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ppst);
         }
-    } // Closes update customer
+    } // Closes update airplane
 
     // ================================ DELETE ================================
-    public void delete(Customer c){
+    public void delete(Airplane a){
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         try {
-            ppst = conn.prepareCall("DELETE FROM customer WHERE customer_key = ?");
-            ppst.setInt(1, c.getCustomerKey());
+            ppst = conn.prepareCall("DELETE FROM airplane WHERE airplane_key = ?");
+            ppst.setInt(1, a.getAirplaneKey());
             ppst.executeUpdate();
             System.out.println("Successfully deleted.");
         } catch (SQLException e) {
@@ -96,29 +96,29 @@ public class CustomerDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ppst);
         }
-    } // Closes delete customer
+    } // Closes delete airplane
 
     // ||||||||||||||||||||||||||||||||  FIND  ||||||||||||||||||||||||||||||||
 
     // ================================ BY KEY ================================
-    public Customer findByKey(String cid) {
+    public Airplane findByKey(String aid) {
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        Customer c = null;
+        Airplane a = null;
 
         try {
-            ppst = conn.prepareStatement("SELECT * FROM customer WHERE customer_key = ?");
-            ppst.setInt(1, parseInt(cid));
+            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE airplane_key = ?");
+            ppst.setInt(1, parseInt(aid));
             rest = ppst.executeQuery();
 
             rest.next();
-            c = new Customer(
+            a = new Airplane(
                     rest.getInt("customer_key"),
-                    rest.getString("name"),
-                    rest.getString("id"),
-                    rest.getString("phone")
+                    rest.getString("code"),
+                    rest.getString("planename"),
+                    rest.getInt("qntseats")
             );
 
         } catch (SQLException e) {
@@ -126,97 +126,96 @@ public class CustomerDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return c;
-    } // Closes find customer by key
+        return a;
+    } // Closes find airplane by key
 
-    // ================================ BY NAME ===============================
-    public List<Customer> findByName(String n) {
+    // ================================ BY CODE ===============================
+    public List<Airplane> findByCode(String c) {
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        List<Customer> customers = new ArrayList<>();
+        List<Airplane> airplanes = new ArrayList<>();
 
         try {
-            ppst = conn.prepareStatement("SELECT * FROM customer WHERE name LIKE ?");
+            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE code = ?");
+            ppst.setString(1, c);
+            rest = ppst.executeQuery();
+
+            while (rest.next()) {
+                Airplane a = new Airplane(
+                        rest.getInt("customer_key"),
+                        rest.getString("code"),
+                        rest.getString("planename"),
+                        rest.getInt("qntseats")
+                );
+                airplanes.add(a);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Query error: ", e);
+        } finally {
+            ConnectionFactory.closeConnection(conn, ppst, rest);
+        }
+        return airplanes;
+    } // Closes find airplane by code
+
+    // ================================ BY NAME ===============================
+    public List<Airplane> findByName(String n) {
+
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ppst = null;
+        ResultSet rest = null;
+        List<Airplane> airplanes = new ArrayList<>();
+
+        try {
+            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE planename LIKE ?");
             ppst.setString(1, "%" + n + "%");
             rest = ppst.executeQuery();
 
             while (rest.next()) {
-                Customer c = new Customer(
-                    rest.getInt("customer_key"),
-                    rest.getString("name"),
-                    rest.getString("id"),
-                    rest.getString("phone")
+                Airplane a = new Airplane(
+                        rest.getInt("customer_key"),
+                        rest.getString("code"),
+                        rest.getString("planename"),
+                        rest.getInt("qntseats")
                 );
-                customers.add(c);
+                airplanes.add(a);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Query error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return customers;
-    } // Closes find customer by name
+        return airplanes;
+    } // Closes find airplane by name
 
-    // ================================ BY ID =================================
-    public List<Customer> findById(String i) {
+    // ================================ BY SEATS ==============================
+    public List<Airplane> findBySeats(String s) {
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        List<Customer> customers = new ArrayList<>();
+        List<Airplane> airplanes = new ArrayList<>();
 
         try {
-            ppst = conn.prepareStatement("SELECT * FROM customer WHERE id = ?");
-            ppst.setString(1, i);
+            ppst = conn.prepareStatement("SELECT * FROM airplane WHERE qntseats >= ?");
+            ppst.setInt(1, parseInt(s));
             rest = ppst.executeQuery();
 
             while (rest.next()) {
-                Customer c = new Customer(
-                    rest.getInt("customer_key"),
-                    rest.getString("name"),
-                    rest.getString("id"),
-                    rest.getString("phone")
+                Airplane a = new Airplane(
+                        rest.getInt("customer_key"),
+                        rest.getString("code"),
+                        rest.getString("planename"),
+                        rest.getInt("qntseats")
                 );
-                customers.add(c);
+                airplanes.add(a);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Query error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return customers;
-    } // Closes find customer by id
-
-    // ================================ BY PHONE ==============================
-    public List<Customer> findByPhone(String p) {
-
-        Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement ppst = null;
-        ResultSet rest = null;
-        List<Customer> customers = new ArrayList<>();
-
-        try {
-            ppst = conn.prepareStatement("SELECT * FROM customer WHERE phone = ?");
-            ppst.setString(1, p);
-            rest = ppst.executeQuery();
-
-            while (rest.next()) {
-                Customer c = new Customer(
-                    rest.getInt("customer_key"),
-                    rest.getString("name"),
-                    rest.getString("id"),
-                    rest.getString("phone")
-                );
-                customers.add(c);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Query error: ", e);
-        } finally {
-            ConnectionFactory.closeConnection(conn, ppst, rest);
-        }
-        return customers;
-    } // Closes find customer by phone
-
+        return airplanes;
+    } // Closes find airplane by seats
 }

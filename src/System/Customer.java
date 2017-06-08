@@ -22,11 +22,11 @@ public class Customer {
 
     // ========== getters e setters ==========
 
-    public int getCustomerID() {
+    public int getCustomerKey() {
         return customerKey;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerKey(int customerID) {
         this.customerKey = customerID;
     }
 

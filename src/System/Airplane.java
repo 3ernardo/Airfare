@@ -1,6 +1,7 @@
 package System;
 
 public class Airplane {
+    private int airplaneKey;
     private String code;
     private String planeName;
     private int qntSeats;
@@ -11,7 +12,22 @@ public class Airplane {
         this.qntSeats = qntSeats;
     }
 
+    public Airplane(int aK, String code, String planeName, int qntSeats) {
+        this.airplaneKey = aK;
+        this.code = code;
+        this.planeName = planeName;
+        this.qntSeats = qntSeats;
+    }
+
     // ========== getters e setters ==========
+
+    public int getAirplaneKey() {
+        return airplaneKey;
+    }
+
+    public void setAirplaneKey(int airplaneKey) {
+        this.airplaneKey = airplaneKey;
+    }
 
     public String getCode() {
         return code;
