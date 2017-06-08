@@ -2,8 +2,13 @@ package Connector;
 
 import DAO.CustomerDAO;
 import DAO.AirplaneDAO;
+import DAO.FlightDAO;
 import System.Customer;
 import System.Airplane;
+import System.Flight;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Bernardo on 07/06/2017.
@@ -11,19 +16,35 @@ import System.Airplane;
 public class ConnectionTester {
     public static void main(String[] args) {
 
-        Airplane a1 = new Airplane("FQQ-4843", "Embraer", 2);
-        Airplane a2 = new Airplane("HWH-5429", "Boeing", 64);
-        createPlane(a1);
-        createPlane(a2);
-        readPlanes();
-        a1.setPlaneName("Airbus");
-        a1.setAirplaneKey(3);
-        updatePlane(a1);
-        a2.setAirplaneKey(2);
-        deleteAirplane(a2);
-        readPlanes();
+        DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        AirplaneDAO aDAO = new AirplaneDAO();
+        CustomerDAO cDAO = new CustomerDAO();
 
 
+//        Airplane a1 = new Airplane("FQQ-4843", "Embraer", 2);
+//        Airplane a2 = new Airplane("HWH-5429", "Boeing", 64);
+//        createPlane(a1);
+//        createPlane(a2);
+//        readPlanes();
+//        a1.setPlaneName("Airbus");
+//        a1.setAirplaneKey(3);
+//        updatePlane(a1);
+//        a2.setAirplaneKey(2);
+//        deleteAirplane(a2);
+//        readPlanes();
+        Flight f1 = new Flight("654-484", "Porto Alegre", "Curitiba", LocalDateTime.parse("2017-05-05 12:00", dateForm), aDAO.findByKey("5"));
+
+        createFlight(f1);
+
+        //cDAO.findByKey("0");
+
+
+    }
+
+
+    private static void createFlight(Flight f) {
+        FlightDAO fDAO = new FlightDAO();
+        fDAO.create(f);
     }
 
     private static void printPlaneHeader() {

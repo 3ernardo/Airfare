@@ -115,7 +115,7 @@ public class AirplaneDAO {
 
             rest.next();
             a = new Airplane(
-                    rest.getInt("customer_key"),
+                    rest.getInt("airplane_key"),
                     rest.getString("code"),
                     rest.getString("planename"),
                     rest.getInt("qntseats")
