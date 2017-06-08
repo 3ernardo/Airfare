@@ -1,9 +1,9 @@
 package Connector;
 
 import DAO.CustomerDAO;
+import DAO.AirplaneDAO;
 import System.Customer;
-
-import javax.swing.table.DefaultTableModel;
+import System.Airplane;
 
 /**
  * Created by Bernardo on 07/06/2017.
@@ -11,35 +11,79 @@ import javax.swing.table.DefaultTableModel;
 public class ConnectionTester {
     public static void main(String[] args) {
 
-        Customer c1 = new Customer("Bernardo Araujo", "4489325", "98764-8688");
-        Customer c2 = new Customer("Giuseppe Bat", "9635459", "98576-8669");
-        createCustomer(c1);
-        createCustomer(c2);
-        readCustomer();
-        Customer c3 = findCustomer(2, "Giuseppe Bat");
-        c3.setName("Giuseppe Battaglino");
-        updateCustomer(c3);
-        readCustomer();
-        deleteCustomer(c3);
-        readCustomer();
+        Airplane a1 = new Airplane("FQQ-4843", "Embraer", 2);
+        Airplane a2 = new Airplane("HWH-5429", "Boeing", 64);
+        createPlane(a1);
+        createPlane(a2);
+        readPlanes();
+        a1.setPlaneName("Airbus");
+        a1.setAirplaneKey(3);
+        updatePlane(a1);
+        a2.setAirplaneKey(2);
+        deleteAirplane(a2);
+        readPlanes();
+
+
     }
 
-    private static int spacerA = 20;
-    private static int spacerB = 15;
-    private static int spacerC = 18;
+    private static void printPlaneHeader() {
+        System.out.println(String.format("%-" + spacerA + "s", "Key") + "\t" +
+                String.format("%-" + spacerB + "s", "Code") + "\t" +
+                String.format("%-" + spacerC + "s", "Designation") + "\t" +
+                String.format("%-" + spacerD + "s", "Quantity"));
+    }
+
+    private static void printAirplane(Airplane a) {
+        System.out.println(String.format("%-" + spacerA + "s", a.getAirplaneKey()) + "\t" +
+                String.format("%-" + spacerB + "s", a.getCode()) + "\t" +
+                String.format("%-" + spacerC + "s", a.getPlaneName()) + "\t" +
+                String.format("%-" + spacerD + "s", a.getQntSeats())
+        );
+    }
+
+    private static void createPlane(Airplane a){
+        AirplaneDAO aDAO = new AirplaneDAO();
+        aDAO.create(a);
+    }
+
+    private static void readPlanes() {
+        AirplaneDAO aDAO = new AirplaneDAO();
+        printPlaneHeader();
+        for (Airplane a : aDAO.read()) {
+            printAirplane(a);
+        }
+    }
+
+    private static void updatePlane(Airplane a){
+        AirplaneDAO aDAO = new AirplaneDAO();
+        aDAO.update(a);
+    }
+
+    private static void deleteAirplane(Airplane a){
+        AirplaneDAO aDAO = new AirplaneDAO();
+        aDAO.delete(a);
+    }
+
+
+
+
+    private static int spacerA = 5;
+    private static int spacerB = 20;
+    private static int spacerC = 15;
+    private static int spacerD = 18;
 
     private static void printCustomerHeader() {
-        System.out.println(String.format("%-" + spacerB + "s", "CID") + "\t" +
-                String.format("%-" + spacerA + "s", "Name") + "\t" +
-                String.format("%-" + spacerB + "s", "ID") + "\t" +
-                String.format("%-" + spacerC + "s", "Telephone"));
+        System.out.println(String.format("%-" + spacerA + "s", "Key") + "\t" +
+                String.format("%-" + spacerB + "s", "Name") + "\t" +
+                String.format("%-" + spacerC + "s", "ID") + "\t" +
+                String.format("%-" + spacerD + "s", "Telephone"));
     }
 
     private static void printCustomer(Customer c) {
-        System.out.println(String.format("%-" + spacerB + "s", c.getCustomerID()) + "\t" +
-                String.format("%-" + spacerA + "s", c.getName()) + "\t" +
-                String.format("%-" + spacerB + "s", c.getId()) + "\t" +
-                String.format("%-" + spacerC + "s", c.getPhone())
+        System.out.println(String.format("%-" + spacerA + "s", c.getCustomerKey()) + "\t" +
+                String.format("%-" + spacerB + "s", c.getName()) + "\t" +
+                String.format("%-" + spacerC + "s", c.getId()) + "\t" +
+                String.format("%-" + spacerD + "s", c.getPhone())
         );
     }
 
@@ -66,22 +110,26 @@ public class ConnectionTester {
         cDAO.delete(c);
     }
 
-    private static Customer findCustomer(int tipe, String value){
+    private static void findCustomer(int tipe, String value){
         CustomerDAO cDAO = new CustomerDAO();
-        Customer c = null;
+        Customer cust = null;
+        printCustomerHeader();
+
         switch (tipe) {
-            case 1: c = cDAO.findByKey(value);
+            case 1: printCustomer(cDAO.findByKey(value));
                 break;
-            case 2: c = cDAO.findByName(value);
+            case 2:
+                for (Customer c : cDAO.findByName(value)) printCustomer(c);
                 break;
-            case 3: c = cDAO.findById(value);
+            case 3:
+                for (Customer c : cDAO.findById(value)) printCustomer(c);
                 break;
-            case 4: c = cDAO.findByPhone(value);
+            case 4:
+                for (Customer c : cDAO.findByPhone(value)) printCustomer(c);
                 break;
             default:
                 break;
         }
-        return c;
     }
 
 }
