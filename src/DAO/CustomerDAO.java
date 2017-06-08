@@ -138,7 +138,7 @@ public class CustomerDAO {
         List<Customer> customers = new ArrayList<>();
 
         try {
-            ppst = conn.prepareStatement("SELECT * FROM customer WHERE name LIKE ?");
+            ppst = conn.prepareStatement("SELECT * FROM customer WHERE LOWER(name) LIKE LOWER(?)");
             ppst.setString(1, "%" + n + "%");
             rest = ppst.executeQuery();
 

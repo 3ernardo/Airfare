@@ -1,6 +1,9 @@
 package System;
 
 public class Airplane {
+// ==================== Airplane ====================
+// Esta classe cria conexao com o BD e fornece os metodos necessarios
+// para que as classes do pacote DAO acessem ao BD.
     private int airplaneKey;
     private String code;
     private String planeName;
