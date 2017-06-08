@@ -1,14 +1,16 @@
 package Menu;
 
 public class Option {
+//	==================== Option ====================
+//	Esta classe cria as opcoes do menu pelo qual o usuario navegara.
 
 	private String optName;
 	
-	public Option(String name){			//este metodo atribui a variavel optName o valor informado
-		optName = name;
+	public Option(String name){
+		this.optName = name;
 	}
 	
-	public String getOption(){			//este metodo retorna optName
-		return optName;
+	public String getOption(){
+		return this.optName;
 	}
 }
