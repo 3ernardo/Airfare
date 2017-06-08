@@ -4,6 +4,11 @@ import Menu.Menu;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import DAO.CustomerDAO;
+import System.Printer;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
 /**
  * Created by Giuseppe on 08/06/2017.
@@ -337,7 +342,9 @@ public class ApplicationDB {
                 error = "Invalid phone, must contain only numbers and dashes.";
             } while (!validator(phone, Validators.customerPhoneValidator, error));
 
-            repC.appendCustomer(name, id, phone);
+            Customer c = new Customer(name, id, phone);
+            CustomerDAO cDAO = new CustomerDAO();
+            cDAO.create(c);
         }
     }//--------------------------------------------------------- addCustomer
 
@@ -371,6 +378,7 @@ public class ApplicationDB {
             fCMenu.addOption("Search by name");
             fCMenu.addOption("Search by ID");
             fCMenu.addOption("Search by telephone");
+            fCMenu.addOption("Search by key");
             fCMenu.addOption("Back to customer menu");
             fCMenu.showMenu();
             option = intValidator(Console.scanString(""));
@@ -394,30 +402,71 @@ public class ApplicationDB {
                 findCustPhone();
                 break;
             case 4:
+                findCustKey();
+                break;
+            case 5:
                 break;
             default:
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceFindCustomerMenu
+    }
+
+    public void checkIsEmpty(List<Customer> lst){
+        if (lst.isEmpty()){
+            System.out.println("This search did not produce results.");
+        } else {
+            Printer.printCustomerHeader();
+            for(Customer c : lst) {
+                Printer.printCustomer(c);
+            }
+        }
+    }
 
     public void findCustName() {
-        repC.searchCustomer(1, Console.scanString("Customer's name:"));
-    }//--------------------------------------------------------- findCustName
+        CustomerDAO cDAO = new CustomerDAO();
+        List<Customer> customers = cDAO.findByName(Console.scanString("Customer's name:"));
+
+       checkIsEmpty(customers);
+    }
 
     public void findCustId() {
-        repC.searchCustomer(2, Console.scanString("Customer's ID:"));
-    }//--------------------------------------------------------- findCustId
+        CustomerDAO cDAO = new CustomerDAO();
+        List<Customer> customers = cDAO.findById(Console.scanString("Customer's ID:"));
+
+        checkIsEmpty(customers);
+    }
 
     public void findCustPhone() {
-        repC.searchCustomer(3, Console.scanString("Customer's Telephone:"));
-    }//--------------------------------------------------------- findCustPhone
+        CustomerDAO cDAO = new CustomerDAO();
+        List<Customer> customers = cDAO.findByPhone(Console.scanString("Customer's Telephone:"));
+
+        checkIsEmpty(customers);
+    }
+
+    public void findCustKey() {
+        CustomerDAO cDAO = new CustomerDAO();
+        Customer customers = cDAO.findByKey(Console.scanString("Customer's key:"));
+
+        if (customers == null){
+            System.out.println("This search did not produce results.");
+        } else {
+            Printer.printCustomerHeader();
+            Printer.printCustomer(customers);
+        }
+
+    }
 
     public void listCustomers() {
         System.out.println("\n" +
                 "________________________________\n" +
                 "        CUSTOMERS LIST          ");
-        repC.listCustomers();
+
+        CustomerDAO cDAO = new CustomerDAO();
+        Printer.printCustomerHeader();
+        for (Customer c : cDAO.read()) {
+            Printer.printCustomer(c);
+        }
     }//--------------------------------------------------------- listCustomers
 
     public void makeASale() {
