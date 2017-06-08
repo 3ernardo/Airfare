@@ -1,5 +1,6 @@
 package System;
 
+import DAO.AirplaneDAO;
 import Menu.Menu;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,10 @@ import com.sun.xml.internal.bind.v2.model.core.ID;
  * Created by Giuseppe on 08/06/2017.
  */
 public class ApplicationDB {
-
+// ==================== ApplicationDB ====================
+// Esta classe e encarregada de inicializar o sistema, cuida de todas as funcionalidades do menu
+// e permite manter os dados concistentes no BD.
+//  Essa classe e dividida em 3 niveis de menus.
 
     RepositoryCustomer repC = new RepositoryCustomer();
     RepositoryFlight repF = new RepositoryFlight();
@@ -37,7 +41,7 @@ public class ApplicationDB {
         repF.appendFlight("Berlim", "Bayern", LocalDateTime.parse("2017-07-03 19:00", dateForm), repA.getAnAirplane("Cessna"));
         repF.appendFlight("Carapelle", "Eboli", LocalDateTime.parse("2017-07-10 22:00", dateForm), repA.getAnAirplane("Cirrus"));
         printMainMenu();
-    }//--------------------------------------------------------- exe
+    }
 
     public int intValidator(String opt) {
         try {
@@ -71,7 +75,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 6);
-    }//--------------------------------------------------------- printMainMenu
+    }
 
     public void choiceMainMenu(int opt) {
         switch (opt) {
@@ -98,7 +102,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceMainMenu
+    }
 
     //====================================================================================== 2º level
 
@@ -123,7 +127,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 6);
-    }//--------------------------------------------------------- printSalesMenu
+    }
 
     public void choiceSalesMenu(int opt) {
         switch (opt) {
@@ -147,7 +151,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceSalesMenu
+    }
 
     public void reportByCustomer() {
         String customerName = Console.scanString("Input customer's name:");
@@ -205,7 +209,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
-    }//--------------------------------------------------------- printCustomerMenu
+    }
 
     public void choiceCustomerMenu(int opt) {
         switch (opt) {
@@ -224,7 +228,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceCustomerMenu
+    }
 
     public void printFlightMenu() {
         int option = 0;
@@ -245,7 +249,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
-    }//--------------------------------------------------------- printFlightMenu
+    }
 
     public void choiceFlightMenu(int opt) {
         switch (opt) {
@@ -264,7 +268,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceFlightMenu
+    }
 
     public void printAirplaneMenu() {
         int option = 0;
@@ -285,7 +289,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
-    }//--------------------------------------------------------- printAirplaneMenu
+    }
 
     public void choiceAirplaneMenu(int opt) {
         switch (opt) {
@@ -304,7 +308,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceAirplaneMenu
+    }
 
     //====================================================================================== 3º level
 
@@ -346,7 +350,7 @@ public class ApplicationDB {
             CustomerDAO cDAO = new CustomerDAO();
             cDAO.create(c);
         }
-    }//--------------------------------------------------------- addCustomer
+    }
 
     public boolean validator(String toTest, String testAgainst, String errorMessage) {
         if (toTest.matches(testAgainst)) {
@@ -388,7 +392,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
-    }//--------------------------------------------------------- printFindCustomerMenu
+    }
 
     public void choiceFindCustomerMenu(int opt) {
         switch (opt) {
@@ -412,7 +416,7 @@ public class ApplicationDB {
         }
     }
 
-    public void checkIsEmpty(List<Customer> lst){
+    public void checkIsEmptyC(List<Customer> lst){
         if (lst.isEmpty()){
             System.out.println("This search did not produce results.");
         } else {
@@ -427,21 +431,21 @@ public class ApplicationDB {
         CustomerDAO cDAO = new CustomerDAO();
         List<Customer> customers = cDAO.findByName(Console.scanString("Customer's name:"));
 
-       checkIsEmpty(customers);
+       checkIsEmptyC(customers);
     }
 
     public void findCustId() {
         CustomerDAO cDAO = new CustomerDAO();
         List<Customer> customers = cDAO.findById(Console.scanString("Customer's ID:"));
 
-        checkIsEmpty(customers);
+        checkIsEmptyC(customers);
     }
 
     public void findCustPhone() {
         CustomerDAO cDAO = new CustomerDAO();
         List<Customer> customers = cDAO.findByPhone(Console.scanString("Customer's Telephone:"));
 
-        checkIsEmpty(customers);
+        checkIsEmptyC(customers);
     }
 
     public void findCustKey() {
@@ -454,7 +458,6 @@ public class ApplicationDB {
             Printer.printCustomerHeader();
             Printer.printCustomer(customers);
         }
-
     }
 
     public void listCustomers() {
@@ -467,7 +470,7 @@ public class ApplicationDB {
         for (Customer c : cDAO.read()) {
             Printer.printCustomer(c);
         }
-    }//--------------------------------------------------------- listCustomers
+    }
 
     public void makeASale() {
         listCustomers(); //optional listing
@@ -560,7 +563,7 @@ public class ApplicationDB {
 
             repF.appendFlight(origin, destination, departureTime, designatedPlane);
         }
-    }//--------------------------------------------------------- addFlight
+    }
 
     public void printFindFlightMenu() {
         int option = 0;
@@ -582,7 +585,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 5);
-    }//--------------------------------------------------------- printFindFlightMenu
+    }
 
     public void choiceFindFlightMenu(int opt) {
         switch (opt) {
@@ -604,30 +607,30 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceFindFlightMenu
+    }
 
     public void findFlightOrigin() {
         repF.searchFlight(1, Console.scanString("Flight's origin:"));
-    }//--------------------------------------------------------- findFlightOrigin
+    }
 
     public void findFlightDestination() {
         repF.searchFlight(2, Console.scanString("Flight's destination:"));
-    }//--------------------------------------------------------- findFlightDestination
+    }
 
     public void findFlightDepartureTime() {
         repF.searchFlight(3, Console.scanString("Flight's departure time:"));
-    }//--------------------------------------------------------- findFlightDepartureTime
+    }
 
     public void findFlightAirplane() {
         repF.searchFlight(4, Console.scanString("Flight's airplane:"));
-    }//--------------------------------------------------------- findFlightAirplane
+    }
 
     public void listFlights() {
         System.out.println("\n" +
                 "________________________________\n" +
                 "         LIST FLIGHTS        ");
         repF.listFlights();
-    }//--------------------------------------------------------- listFlights
+    }
 
 
     public void addAirplane() {
@@ -666,9 +669,11 @@ public class ApplicationDB {
                 }
             } while (qntSeats == 0);
 
-            repA.appendAirplane(code, planeName, qntSeats);
+            Airplane a = new Airplane(code, planeName, qntSeats);
+            AirplaneDAO aDAO = new AirplaneDAO();
+            aDAO.create(a);
         }
-    }//--------------------------------------------------------- addAirplane
+    }
 
     public void printFindAirplaneMenu() {
         int option = 0;
@@ -680,6 +685,7 @@ public class ApplicationDB {
             fAMenu.addOption("Search by code");
             fAMenu.addOption("Search by name");
             fAMenu.addOption("Search by seats");
+            fAMenu.addOption("Search by key");
             fAMenu.addOption("Back to customer menu");
             fAMenu.showMenu();
             option = intValidator(Console.scanString(""));
@@ -689,7 +695,7 @@ public class ApplicationDB {
                 System.out.println("Invalid option.");
             }
         } while (option != 4);
-    }//--------------------------------------------------------- printFindAirplaneMenu
+    }
 
     public void choiceFindAirplaneMenu(int opt) {
         switch (opt) {
@@ -703,31 +709,69 @@ public class ApplicationDB {
                 findAirplaneSeat();
                 break;
             case 4:
+                findAirplaneKey();
+                break;
+            case 5:
                 break;
             default:
                 System.out.println("Invalid option.");
                 break;
         }
-    }//--------------------------------------------------------- choiceFindAirplaneMenu
+    }
+
+    public void checkIsEmptyA(List<Airplane> lst){
+        if (lst.isEmpty()){
+            System.out.println("This search did not produce results.");
+        } else {
+            Printer.printAirplaneHeader();
+            for(Airplane a : lst) {
+                Printer.printAirplane(a);
+            }
+        }
+    }
 
     public void findAirplaneCode() {
-        repA.searchAirplane(1, Console.scanString("Airplane's code:"));
-    }//--------------------------------------------------------- findAirplaneCode
+        AirplaneDAO aDAO = new AirplaneDAO();
+        List<Airplane> airplanes = aDAO.findByCode(Console.scanString("Airplane's code:"));
+
+        checkIsEmptyA(airplanes);
+    }
 
     public void findAirplaneName() {
-        repA.searchAirplane(2, Console.scanString("Airplane's name:"));
-    }//--------------------------------------------------------- findAirplaneName
+        AirplaneDAO aDAO = new AirplaneDAO();
+        List<Airplane> airplanes = aDAO.findByName(Console.scanString("Airplane's name:"));
+
+        checkIsEmptyA(airplanes);
+    }
 
     public void findAirplaneSeat() {
-        repA.searchAirplane(3, Console.scanString("Airplane's seat:"));
-    }//--------------------------------------------------------- findAirplaneSeat
+        AirplaneDAO aDAO = new AirplaneDAO();
+        List<Airplane> airplanes = aDAO.findBySeats(Console.scanString("Airplane's seat:"));
+
+        checkIsEmptyA(airplanes);
+    }
+
+    public void findAirplaneKey() {
+        AirplaneDAO aDAO = new AirplaneDAO();
+        Airplane airplanes = aDAO.findByKey(Console.scanString("Airplane's key:"));
+
+        if (airplanes == null) {
+            System.out.println("This search did not produce results.");
+        } else {
+            Printer.printAirplaneHeader();
+            Printer.printAirplane(airplanes);
+        }
+    }
 
     public void listAirplanes() {
         System.out.println("\n" +
                 "________________________________\n" +
                 "         LIST AIRPLANES        ");
-        repA.listAirplanes();
-    }//--------------------------------------------------------- listAirplanes
-
+        AirplaneDAO aDAO = new AirplaneDAO();
+        Printer.printAirplaneHeader();
+        for (Airplane a: aDAO.read()) {
+            Printer.printAirplane(a);
+        }
+    }
 
 }
