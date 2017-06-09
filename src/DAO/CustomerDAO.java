@@ -101,32 +101,33 @@ public class CustomerDAO {
     // ||||||||||||||||||||||||||||||||  FIND  ||||||||||||||||||||||||||||||||
 
     // ================================ BY KEY ================================
-    public Customer findByKey(String cid) {
+    public List<Customer> findByKey(String cid) {
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        Customer c = null;
+        List<Customer> customers = new ArrayList();
 
         try {
             ppst = conn.prepareStatement("SELECT * FROM customer WHERE customer_key = ?");
             ppst.setInt(1, parseInt(cid));
             rest = ppst.executeQuery();
 
-            rest.next();
-            c = new Customer(
+            while(rest.next()){
+                Customer c = new Customer(
                     rest.getInt("customer_key"),
                     rest.getString("name"),
                     rest.getString("id"),
                     rest.getString("phone")
-            );
-
+                );
+                customers.add(c);
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Query error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return c;
+        return customers;
     } // Closes find customer by key
 
     // ================================ BY NAME ===============================

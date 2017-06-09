@@ -100,34 +100,35 @@ public class AirplaneDAO {
 
     // ||||||||||||||||||||||||||||||||  FIND  ||||||||||||||||||||||||||||||||
 
-    // ================================ BY KEY ================================
-    public Airplane findByKey(String aid) {
+    //  ================================ BY KEY ================================
+    public List<Airplane> findByKey(String aid) {
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ppst = null;
         ResultSet rest = null;
-        Airplane a = null;
+        List<Airplane> airplanes = new ArrayList<>();
 
         try {
             ppst = conn.prepareStatement("SELECT * FROM airplane WHERE airplane_key = ?");
             ppst.setInt(1, parseInt(aid));
             rest = ppst.executeQuery();
 
-            rest.next();
-            a = new Airplane(
-                    rest.getInt("airplane_key"),
-                    rest.getString("code"),
-                    rest.getString("planename"),
-                    rest.getInt("qntseats")
-            );
-
+            while (rest.next()) {
+                Airplane a = new Airplane(
+                        rest.getInt("airplane_key"),
+                        rest.getString("code"),
+                        rest.getString("planename"),
+                        rest.getInt("qntseats")
+                );
+                airplanes.add(a);
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Query error: ", e);
         } finally {
             ConnectionFactory.closeConnection(conn, ppst, rest);
         }
-        return a;
-    } // Closes find airplane by key
+        return airplanes;
+    } // Closes find airplane by code
 
     // ================================ BY CODE ===============================
     public List<Airplane> findByCode(String c) {

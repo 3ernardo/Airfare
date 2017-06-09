@@ -32,9 +32,9 @@ public class ConnectionTester {
 //        a2.setAirplaneKey(2);
 //        deleteAirplane(a2);
 //        readPlanes();
-        Flight f1 = new Flight("654-484", "Porto Alegre", "Curitiba", LocalDateTime.parse("2017-05-05 12:00", dateForm), aDAO.findByKey("5"));
+        //Flight f1 = new Flight("654-484", "Porto Alegre", "Curitiba", LocalDateTime.parse("2017-05-05 12:00", dateForm), aDAO.findByKey("5"));
 
-        createFlight(f1);
+        //createFlight(f1);
 
         //cDAO.findByKey("0");
 
@@ -42,10 +42,10 @@ public class ConnectionTester {
     }
 
 
-    private static void createFlight(Flight f) {
-        FlightDAO fDAO = new FlightDAO();
-        fDAO.create(f);
-    }
+//    private static void createFlight(Flight f) {
+//        FlightDAO fDAO = new FlightDAO();
+//        fDAO.create(f);
+//    }
 
     private static void printPlaneHeader() {
         System.out.println(String.format("%-" + spacerA + "s", "Key") + "\t" +
@@ -137,7 +137,7 @@ public class ConnectionTester {
         printCustomerHeader();
 
         switch (tipe) {
-            case 1: printCustomer(cDAO.findByKey(value));
+            case 1: //printCustomer(cDAO.findByKey(value));
                 break;
             case 2:
                 for (Customer c : cDAO.findByName(value)) printCustomer(c);

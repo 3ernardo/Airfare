@@ -25,7 +25,7 @@ public class Airplane {
     // ========== getters e setters ==========
 
     public int getAirplaneKey() {
-        return airplaneKey;
+        return this.airplaneKey;
     }
 
     public void setAirplaneKey(int airplaneKey) {
