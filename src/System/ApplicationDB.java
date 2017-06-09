@@ -450,14 +450,9 @@ public class ApplicationDB {
 
     public void findCustKey() {
         CustomerDAO cDAO = new CustomerDAO();
-        Customer customers = cDAO.findByKey(Console.scanString("Customer's key:"));
+        List<Customer> customers = cDAO.findByKey(Console.scanString("Customer's key:"));
 
-        if (customers == null){
-            System.out.println("This search did not produce results.");
-        } else {
-            Printer.printCustomerHeader();
-            Printer.printCustomer(customers);
-        }
+        checkIsEmptyC(customers);
     }
 
     public void listCustomers() {
@@ -753,14 +748,10 @@ public class ApplicationDB {
 
     public void findAirplaneKey() {
         AirplaneDAO aDAO = new AirplaneDAO();
-        Airplane airplanes = aDAO.findByKey(Console.scanString("Airplane's key:"));
+        List<Airplane> airplanes = aDAO.findByKey(Console.scanString("Airplane's key:"));
 
-        if (airplanes == null) {
-            System.out.println("This search did not produce results.");
-        } else {
-            Printer.printAirplaneHeader();
-            Printer.printAirplane(airplanes);
-        }
+        checkIsEmptyA(airplanes);
+
     }
 
     public void listAirplanes() {

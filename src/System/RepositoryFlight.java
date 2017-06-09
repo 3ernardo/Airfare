@@ -20,8 +20,8 @@ public class RepositoryFlight {
     public void appendFlight(String origin, String destination, LocalDateTime departureTime, Airplane plane) {
         flightCounter++;
         String code = "FLG7"+Integer.toString(flightCounter);
-        Flight f = new Flight(code, origin, destination, departureTime, plane);
-        flights.add(f);
+        //Flight f = new Flight(code, origin, destination, departureTime, plane);
+        //flights.add(f);
     }
 
     private void printFlightHeader() {
